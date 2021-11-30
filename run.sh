@@ -1,4 +1,14 @@
 # Run script for Advent of Code
+#
+# Handles running a series of scripts in the same directory named
+# dayDD.py with the input file input/dayDD_input.txt 
+#
+# If only one argument is provided, it is read as the part no. [1,2]
+# When the day is not provided, today's date is used.
+#
+# Modify lines 44-45 to change what is being run using the 
+# {day} and {part} read from input.
+#
 # usage: ./run.sh [<day [1-25]> = Today] [<part [1,2]> = 1]
 
 #!/bin/bash
