@@ -32,14 +32,11 @@ def find_rating(values,n,k):
         t = [0,0]
         for bits in vals:
             t[1 if bits[i] == '1' else 0] += 1
-        if t[0] == t[1]:
-            vals = [v for v in vals if int(v[i]) == e]
+        if k == 'most':
+            filter_bit = 0 if t[0] > t[1] else 1
         else:
-            if k == 'most':
-                filter_bit = 0 if t[0] > t[1] else 1
-            else:
-                filter_bit = 0 if t[0] < t[1] else 1
-            vals = [v for v in vals if int(v[i]) == filter_bit]
+            filter_bit = 1 if t[1] < t[0] else 0
+        vals = [v for v in vals if int(v[i]) == filter_bit]
         i += 1
     return int(vals[0],2)
 
