@@ -27,7 +27,6 @@ def part1(filename):
 def find_rating(values,n,k):
     vals = list(values)
     i = 0
-    e = 1 if k == 'most' else 0
     while len(vals) > 1 and i < n:
         t = [0,0]
         for bits in vals:
