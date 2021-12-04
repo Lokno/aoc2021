@@ -2,7 +2,6 @@ import sys
 import argparse
 from pathlib import Path
 import time
-from itertools import product
 
 def read_values(filename):
     with open(filename) as fin:
