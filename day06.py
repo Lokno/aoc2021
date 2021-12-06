@@ -4,31 +4,19 @@ from pathlib import Path
 import time
 from itertools import product
 
-def read_counters(filename):
-    with open(filename) as fin:
-        counters = [int(c) for c in fin.readline().split(',')]
-    return counters
-
 def calc_fish_count(filename,days):
-    counters = read_counters(filename)
-    fish = [[c,1] for c in counters]
-    total_count = len(fish)
+    m = 8
+    total_count = 0;
+    counts = [0]*(m+1)
+    with open(filename) as fin:
+        for c in fin.readline().split(','):
+            counts[int(c)] += 1
+            total_count += 1
 
     for i in range(days):
-        new_fish_count = 0
-
-        for i in range(len(fish)):
-            counter,count = fish[i]
-            counter -= 1
-            if counter < 0:
-                fish[i][0] = 6
-                new_fish_count += count
-                total_count += count
-            else:
-                fish[i][0] = counter
-
-        if new_fish_count > 0:
-            fish.append([8,new_fish_count])
+        counts = counts[1:] + counts[:1]
+        total_count += counts[8]
+        counts[m-2] += counts[8]
 
     print(total_count)
 
