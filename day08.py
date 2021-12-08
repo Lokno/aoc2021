@@ -118,7 +118,7 @@ def part2(filename):
     for digits,output in data:
         n = len(output)
         mapping = determine_mapping(digits)
-        s += sum(get_digit(mapping,o)*10**(n-i) for i,o in enumerate(output))
+        s += sum(get_digit(mapping,o)*10**(n-i-1) for i,o in enumerate(output))
     print(s)
 
 if __name__ == "__main__":
