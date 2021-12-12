@@ -2,6 +2,7 @@ import sys
 import argparse
 from pathlib import Path
 import time
+from statistics import median
 
 def read_values(filename):
     with open(filename) as fin:
@@ -15,8 +16,8 @@ def part1(filename):
     data = read_values(filename)
     data.sort()
     n = len(data)
-    medium = data[n//2] if n%2!=0 else sum(data[n//2-1:n//2+1])//2
-    cost = sum([abs(medium-x) for x in data])
+    m = median(data)
+    cost = sum([abs(m-x) for x in data])
     print(cost)
 
 def part2(filename):
