@@ -4,9 +4,6 @@ from pathlib import Path
 import time
 import pyperclip
 
-from itertools import product
-from statistics import median
-
 def out(str):
     print(str)
     pyperclip.copy(str)
