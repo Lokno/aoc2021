@@ -8,6 +8,31 @@ from itertools import product
 
 from heapq import heappush,heappop
 
+class pqueue:
+    def __init__(self):
+        self.pq = []
+        self.entry_finder = {}
+        self.REMOVED = '<removed-task>'
+
+    def remove(self,data):
+        entry = self.entry_finder.pop(data)
+        entry[-1] = self.REMOVED
+
+    def add(self,data,priority=0):
+        if data in self.entry_finder:
+            self.remove(data)
+        entry = [priority, data]
+        self.entry_finder[data] = entry
+        heappush(self.pq, entry)
+
+    def pop(self):
+        while self.pq:
+            priority, data = heappop(self.pq)
+            if data is not self.REMOVED:
+                del self.entry_finder[data]
+                return priority, data
+        raise KeyError('pop from an empty pqueue')
+
 def out(str):
     print(str)
     pyperclip.copy(str)
@@ -36,9 +61,7 @@ def expand_grid(w,h,grid):
         sx = x % w
         sy = y % h
 
-        risk = grid[(sx,sy)]
-
-        risk += x // w + y // h
+        risk = grid[(sx,sy)] + x // w + y // h
         risk = risk if risk < 10 else risk-9
 
         coords[(x,y)] = risk
@@ -54,27 +77,26 @@ def print_memo(memo,w,h):
 
 def calculate_least_risk(w,h,grid):
     unvisited = set((x,y) for x,y in product(range(w),range(h)))
-    risks = {(x,y):w*h for x,y in product(range(w),range(h))}
+    risks = {}
 
     start = (0,0)
     end = (w-1,h-1)
 
     risks[start] = 0
 
+    pq = pqueue()
+    pq.add(start)
+
     while end in unvisited:
-        unvisited_risks = []
-        for c in unvisited:
-            heappush(unvisited_risks, (risks[c],c))
-        x,y = heappop(unvisited_risks)[1]
-
-        risk = risks[(x,y)]
-
+        risk,(x,y) = pq.pop()
         for px,py in ((-1,0),(0,-1),(1,0),(0,1)):
             nc = x+px,y+py
             if nc in unvisited:
                 nr = risk+grid[nc]
-                if nr < risks[nc]:
+                onr = w*h if nc not in risks else risks[nc]
+                if nr < onr:
                     risks[nc] = nr
+                    pq.add(nc,nr)
         unvisited.remove((x,y))
 
     out(risks[end])
