@@ -32,10 +32,6 @@ def parse_data(filename):
         length_type,num,parent_pos,parent_eq_data,depth = packets[pos]
         p = pos
 
-        if ((length_type == 0 and (p+min_packet_length) > num) or 
-           (length_type == 1 and (p+min_packet_length) > len_ba)):
-            continue
-
         add_on_end = True
 
         version = int(ba[p:p+3].to01(),2)
