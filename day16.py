@@ -126,19 +126,16 @@ def part2(filename):
         o = operations.pop()
         arr = []
         type_id = o['type_id']
-        is_all_literals = True
         for sub in o['subs']:
             if isinstance(sub,dict) and 'result' in sub:
                 arr.append(sub['result'])
             elif isinstance(sub,int):
                 arr.append(sub)
             else:
-                is_all_literals = False
                 print("ERROR: Could not solve sub-equation")
                 break
 
-        if is_all_literals:
-            o['result'] = ops[type_id](arr)
+        o['result'] = ops[type_id](arr)
 
     out(equation['result'])
 
