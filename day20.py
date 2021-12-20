@@ -52,7 +52,6 @@ def iteratively_enhance(filename,steps=2):
     w,h,_,image,algorithm_str = read_algo_and_image(filename)
 
     bounds = (0,w-1,0,h-1)
-
     space = '.'
 
     for i in range(steps):
