@@ -52,10 +52,11 @@ def handle_nd_sequence(steps,n=3,axis=0,volume=1):
         b = breaks[i]
         volume_prime = volume * (breaks[i+1]-b)
         fsteps = tuple((state,bounds) for state,bounds in steps if bounds[axis][0] <= b <= bounds[axis][1])
-        if axis < (n-1):
-            total += handle_nd_sequence(fsteps,n,axis+1,volume_prime)
-        elif fsteps and fsteps[-1][0]:
-            total += volume_prime
+        if fsteps:
+            if axis < (n-1):
+                total += handle_nd_sequence(fsteps,n,axis+1,volume_prime)
+            elif fsteps[-1][0]:
+                total += volume_prime
     return total
 
 def part2(filename):
